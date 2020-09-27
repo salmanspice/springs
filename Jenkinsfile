@@ -18,6 +18,16 @@ pipeline {
     }
 
     stages {
+
+        stage("clone code") {
+                    steps {
+                        script {
+                            // Let's clone the source
+                            git 'https://github.com/danielalejandrohc/cargotracker.git';
+                        }
+                    }
+         }
+
         stage("Build") {
             steps {
                 sh "mvn -version"
