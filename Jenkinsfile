@@ -1,3 +1,5 @@
+// install  nexus-artifact-uploader and pipeline-utility-steps
+
 pipeline {
     agent any
 
@@ -6,17 +8,18 @@ pipeline {
         }
     environment {
              // This can be nexus3 or nexus2
-             NEXUS_VERSION = "nexus3"
+            NEXUS_VERSION = "nexus3"
              // This can be http or https
-             NEXUS_PROTOCOL = "http"
+            NEXUS_PROTOCOL = "http"
              // Where your Nexus is running
-             NEXUS_URL = "192.168.8.107:8081"
+            NEXUS_URL = "192.168.8.107:8081"
              // Repository where we will upload the artifact
-             NEXUS_REPOSITORY = "repository-example"
+            NEXUS_REPOSITORY = "nbk-artifact"
              // Jenkins credential id to authenticate to Nexus OSS
-             NEXUS_CREDENTIAL_ID = "nexus-credentials"
-    }
+            NEXUS_CREDENTIAL_ID = "nexus-credentials"
 
+
+    }
     stages {
 
         stage("clone code") {
@@ -31,10 +34,11 @@ pipeline {
         stage("Build") {
             steps {
                 sh "mvn -version"
-                sh "mvn clean install"
+                sh "mvn clean package -DskipTests -Dimage=192.168.8.107:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}"
             }
         }
-        stage("publish to nexus") {
+
+        stage("publish artifact to nexus") {
                     steps {
                         script {
                             // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
@@ -76,6 +80,22 @@ pipeline {
                         }
                     }
                 }
+
+        stage('Push Image To Nexus') {
+            environment {
+                NEXUS_ID = credentials("nexus_user_id")
+
+                NEXUS_PWD = credentials("nexus_user_pwd")
+            }
+
+            steps {
+
+                    sh 'docker login 192.168.8.107:9060 -u $NEXUS_ID -p $NEXUS_PWD'
+                    sh 'docker push 192.168.8.107:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}'
+
+            }
+        }
+
     }
 
 }
