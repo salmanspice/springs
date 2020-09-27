@@ -23,7 +23,7 @@ pipeline {
                     steps {
                         script {
                             // Let's clone the source
-                            git 'https://github.com/danielalejandrohc/cargotracker.git';
+                            git 'https://github.com/kadirsahan/springs.git';
                         }
                     }
          }
