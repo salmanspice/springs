@@ -1,8 +1,8 @@
 version: '2'
 services:
   jenkins:
-#    build: ./jenkins
-    image: getintodevops/jenkins-withdocker:ts-docker18.06.0
+#    build: ./jenkins if gi
+    image: getintodevops/jenkins-withdocker:lts-docker18.06.0
     container_name: jenkins
     user: jenkins
     volumes:
