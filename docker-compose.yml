@@ -1,0 +1,22 @@
+version: '2'
+services:
+  jenkins:
+#    build: ./jenkins
+    image: getintodevops/jenkins-withdocker:ts-docker18.06.0
+    container_name: jenkins
+    user: jenkins
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+      - "50000:50000"
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    volumes:
+      - "nexus-data:/nexus-data"
+    ports:
+      - "8081:8081"
+volumes:
+  nexus-data: {}
