@@ -40,6 +40,12 @@ RUN ssh-keygen -f /root/.ssh/id_rsa -t rsa -N ''
 # allows to skip Jenkins setup wizard
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 
+# this must be added , otherwise get an error.
+
+
+#usermod -aG docker jenkins
+#usermod -aG root jenkins
+#chmod 664 /var/run/docker.sock
 # Jenkins runs all grovy files from init.groovy.d dir
 # use this for creating default admin user
 COPY default-user.groovy /usr/share/jenkins/ref/init.groovy.d/

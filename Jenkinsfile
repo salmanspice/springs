@@ -19,6 +19,9 @@ pipeline {
             NEXUS_CREDENTIAL_ID = "nexus-credentials"
 
 
+
+
+
     }
     stages {
 
@@ -38,6 +41,13 @@ pipeline {
             }
         }
 
+        stage("SonarQube Analysis") {
+            steps {
+                withSonarQubeEnv("nbk-sonar") {
+                    sh "mvn sonar:sonar"
+                }
+            }
+        }
         stage("publish artifact to nexus") {
                     steps {
                         script {
