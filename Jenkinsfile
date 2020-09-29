@@ -12,7 +12,7 @@ pipeline {
              // This can be http or https
             NEXUS_PROTOCOL = "http"
              // Where your Nexus is running
-            NEXUS_URL = "192.168.8.107:8081"
+            NEXUS_URL = "192.168.8.112:8081"
              // Repository where we will upload the artifact
             NEXUS_REPOSITORY = "nbk-artifact"
              // Jenkins credential id to authenticate to Nexus OSS
@@ -90,8 +90,8 @@ pipeline {
 
             steps {
 
-                    sh 'docker login 192.168.8.107:9060 -u $NEXUS_ID -p $NEXUS_PWD'
-                    sh 'docker push 192.168.8.107:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}'
+                    sh 'docker login 192.168.8.112:9060 -u $NEXUS_ID -p $NEXUS_PWD'
+                    sh 'docker push 192.168.8.112:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}'
 
             }
         }
