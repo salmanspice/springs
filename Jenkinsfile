@@ -34,7 +34,7 @@ pipeline {
         stage("Build") {
             steps {
                 sh "mvn -version"
-                sh "mvn clean package -DskipTests -Dimage=192.168.8.107:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}"
+                sh "mvn clean package -DskipTests -Dimage=192.168.8.112:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}"
             }
         }
 
