@@ -20,7 +20,7 @@ spec:
       imagePullSecrets:
         - name: nbk-secret
       containers:
-        - image: 192.168.8.112/repository/nbknexus/spring/nbkhello:22
+        - image: 192.168.8.112/repository/nbknexus/spring/nbkhello:BUILD_NUMBER
           name: nbkhello
           resources: {}
 status: {}
