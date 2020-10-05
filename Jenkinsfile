@@ -37,7 +37,7 @@ pipeline {
         stage("Build") {
             steps {
                 sh "mvn -version"
-                sh "mvn clean package -DskipTests -Dimage=192.168.8.112:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}"
+                sh "mvn clean package -DskipTests -Dimage=192.168.8.112/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}"
             }
         }
 
@@ -100,8 +100,16 @@ pipeline {
 
             steps {
 
-                    sh 'docker login 192.168.8.112:9060 -u $NEXUS_ID -p $NEXUS_PWD'
-                    sh 'docker push 192.168.8.112:9060/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}'
+                    sh 'docker login 192.168.8.112 -u $NEXUS_ID -p $NEXUS_PWD'
+                    sh 'docker push 192.168.8.112/repository/nbknexus/spring/nbkhello:${BUILD_NUMBER}'
+
+            }
+        }
+
+        stage('Deploy To Kubernetes') {
+
+            steps {
+                    sh 'kubectl apply -f nbk-hello.yaml'
 
             }
         }

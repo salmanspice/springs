@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nbk-hello
+  name: nbk-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nbk-hello
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nbk-hello
+    spec:
+      imagePullSecrets:
+        - name: nbk-secret
+      containers:
+        - image: 192.168.8.112/repository/nbknexus/spring/nbkhello:22
+          name: nbkhello
+          resources: {}
+status: {}
